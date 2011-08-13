@@ -1,4 +1,6 @@
 { "name" : "sax"
+, "description": "A SAX style XML parser"
+, "keywords": "XML SAX parser"
 , "author" : "Isaac Z. Schlueter <i@izs.me>"
 , "version" : "0.2.3"
 , "main" : "lib/sax"
