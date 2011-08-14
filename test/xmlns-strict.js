@@ -13,57 +13,54 @@ require(__dirname).test
       "</root>"
 
     , expect :
-      [ [ "opentag", { name: "root", prefix: "", local: "root", namespace: "", attributes: {}, nsattributes: {}, nsbindings: {} } ]
+      [ [ "opentag", { name: "root", namespace: "", prefix: "", local: "root",
+            attributes: {}, bindings: [] } ]
 
-      , [ "attribute", { name: "attr", value: "normal" } ]
-      , [ "attributens", { name: "attr", value: "normal", prefix: "", local: "attr", namespace: "" } ]
-      , [ "opentag", { name: "plain", prefix: "", local: "plain", namespace: "", attributes: { "attr": "normal" }, 
-                nsattributes: { "attr": { name: "attr", value: "normal", prefix: "", local: "attr", namespace: "" } },
-                nsbindings: {} } ]
+      , [ "attribute", { /*name: "attr", */value: "normal", namespace: "", prefix: "", local: "attr" } ]
+      , [ "opentag", { name: "plain", namespace: "", prefix: "", local: "plain", 
+            attributes: { "attr": { value: "normal", namespace: "", prefix: "", local: "attr" } }, 
+            bindings: [] } ]
       , [ "closetag", "plain" ]
       
+      , [ "bindnamespace", { prefix: "", namespace: "uri:default" } ]
       
-      , [ "attribute", { name: "xmlns", value: "uri:default" } ]
-      , [ "opennamespace", { prefix: "", namespace: "uri:default" } ]
-      , [ "attributens", { name: "xmlns", value: "uri:default", prefix: "", local: "xmlns", namespace: "uri:default" } ]
-      , [ "opentag", { name: "ns1", prefix: "", local: "ns1", namespace: "uri:default", attributes: { "xmlns": "uri:default" }, 
-                nsattributes: { "xmlns": { name: "xmlns", value: "uri:default", prefix: "", local: "xmlns", namespace: "uri:default" } }, 
-                nsbindings: { "": "uri:default" } } ]
+      , [ "attribute", { /*name: "xmlns", */value: "uri:default", namespace: "uri:default", prefix: "", local: "xmlns" } ]
+      , [ "opentag", { name: "ns1", namespace: "uri:default", prefix: "", local: "ns1", 
+            attributes: { "xmlns": { value: "uri:default", namespace: "uri:default", prefix: "", local: "xmlns" } }, 
+            bindings: [ "" ] } ]
 
-      , [ "attribute", { name: "attr", value: "normal" } ]
-      , [ "attributens", { name: "attr", value: "normal", prefix: "", local: "attr", namespace: "uri:default" } ] // XXX default NS shouldn't apply to attrs
-      , [ "opentag", { name: "plain", prefix: "", local: "plain", namespace: "uri:default", attributes: { "attr": "normal" }, 
-                nsattributes: { "attr": { name: "attr", value: "normal", prefix: "", local: "attr", namespace: "uri:default" } }, // XXX default NS shouldn't apply to attrs
-                nsbindings: {} } ]
-                
+      , [ "attribute", { /*name: "attr", */value: "normal", namespace: "uri:default", prefix: "", local: "attr" } ]                     // XXX default NS shouldn't apply to attrs
+      , [ "opentag", { name: "plain", namespace: "uri:default", prefix: "", local: "plain", 
+            attributes: { "attr": { value: "normal", namespace: "uri:default", prefix: "", local: "attr" } },   // XXX default NS shouldn't apply to attrs
+            bindings: [] } ]
       , [ "closetag", "plain" ]
+
       , [ "closetag", "ns1" ]
-      , [ "closenamespace", { prefix: "", namespace: "uri:default" } ]
+
+      , [ "unbindnamespace", { prefix: "", namespace: "uri:default" } ]
       
+      , [ "bindnamespace", { prefix: "a", namespace: "uri:nsa" } ]
+      
+      , [ "attribute", { /*name: "xmlns:a", */value: "uri:nsa", namespace: "", prefix: "xmlns", local: "a" } ]
+      , [ "opentag", { name: "ns2", namespace: "", prefix: "", local: "ns2", 
+            attributes: { "xmlns:a": { value: "uri:nsa", namespace: "", prefix: "xmlns", local: "a" } }, 
+            bindings: [ "a" ] } ]
 
-      , [ "attribute", { name: "xmlns:a", value: "uri:nsa" } ]
-      , [ "opennamespace", { prefix: "a", namespace: "uri:nsa" } ]
-      , [ "attributens", { name: "xmlns:a", value: "uri:nsa", prefix: "xmlns", local: "a", namespace: "" } ]
-      , [ "opentag", { name: "ns2", prefix: "", local: "ns2", namespace: "", attributes: { "xmlns:a": "uri:nsa" }, 
-                nsattributes: { "xmlns:a": { name: "xmlns:a", value: "uri:nsa", prefix: "xmlns", local: "a", namespace: "" } }, 
-                nsbindings: { "a": "uri:nsa" } } ]
-
-      , [ "attribute", { name: "attr", value: "normal" } ]
-      , [ "attributens", { name: "attr", value: "normal", prefix: "", local: "attr", namespace: "" } ]
-      , [ "opentag", { name: "plain", prefix: "", local: "plain", namespace: "", attributes: { "attr": "normal" }, 
-                nsattributes: { "attr": { name: "attr", value: "normal", prefix: "", local: "attr", namespace: "" } },
-                nsbindings: {} } ]
+      , [ "attribute", { /*name: "attr", */value: "normal", namespace: "", prefix: "", local: "attr" } ]
+      , [ "opentag", { name: "plain", namespace: "", prefix: "", local: "plain", 
+            attributes: { "attr": { value: "normal", namespace: "", prefix: "", local: "attr" } },
+            bindings: [] } ]
       , [ "closetag", "plain" ]
       
-      , [ "attribute", { name: "a:attr", value: "namespaced" } ]
-      , [ "attributens", { name: "a:attr", value: "namespaced", prefix: "a", local: "attr", namespace: "uri:nsa" } ]
-      , [ "opentag", { name: "a:ns", prefix: "a", local: "ns", namespace: "uri:nsa", attributes: { "a:attr": "namespaced" }, 
-                nsattributes: { "a:attr": { name: "a:attr", value: "namespaced", prefix: "a", local: "attr", namespace: "uri:nsa" } },
-                nsbindings: {} } ]
-
+      , [ "attribute", { /*name: "a:attr", */value: "namespaced", namespace: "uri:nsa", prefix: "a", local: "attr" } ]
+      , [ "opentag", { name: "a:ns", namespace: "uri:nsa", prefix: "a", local: "ns", 
+            attributes: { "a:attr": { value: "namespaced", namespace: "uri:nsa", prefix: "a", local: "attr" } },
+            bindings: [] } ]
       , [ "closetag", "a:ns" ]
+
       , [ "closetag", "ns2" ]
-      , [ "closenamespace", { prefix: "a", namespace: "uri:nsa" } ]
+
+      , [ "unbindnamespace", { prefix: "a", namespace: "uri:nsa" } ]
 
       , [ "closetag", "root" ]
       ]
