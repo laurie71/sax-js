@@ -9,48 +9,48 @@ require(__dirname).test
       "</root>"
 
     , expect :
-      [ [ "bindnamespace", { prefix: "x", namespace: "x1" } ]
-      , [ "bindnamespace", { prefix: "y", namespace: "y1" } ]
-      , [ "attribute", { name: "xmlns:x", value: "x1", namespace: "", prefix: "xmlns", local: "x" } ]
-      , [ "attribute", { name: "xmlns:y", value: "y1", namespace: "", prefix: "xmlns", local: "y" } ]
-      , [ "attribute", { name: "x:a", value: "x1", namespace: "x1", prefix: "x", local: "a" } ]
-      , [ "attribute", { name: "y:a", value: "y1", namespace: "y1", prefix: "y", local: "a" } ]
-      , [ "opentag", { name: "root", namespace: "", prefix: "", local: "root",
-            attributes: { "xmlns:x": { name: "xmlns:x", value: "x1", namespace: "", prefix: "xmlns", local: "x" }
-                        , "xmlns:y": { name: "xmlns:y", value: "y1", namespace: "", prefix: "xmlns", local: "y" }
-                        , "x:a": { name: "x:a", value: "x1", namespace: "x1", prefix: "x", local: "a" }
-                        , "y:a": { name: "y:a", value: "y1", namespace: "y1", prefix: "y", local: "a" } }, 
+      [ [ "opennamespace", { prefix: "x", uri: "x1" } ]
+      , [ "opennamespace", { prefix: "y", uri: "y1" } ]
+      , [ "attribute", { name: "xmlns:x", value: "x1", uri: "", prefix: "xmlns", local: "x" } ]
+      , [ "attribute", { name: "xmlns:y", value: "y1", uri: "", prefix: "xmlns", local: "y" } ]
+      , [ "attribute", { name: "x:a", value: "x1", uri: "x1", prefix: "x", local: "a" } ]
+      , [ "attribute", { name: "y:a", value: "y1", uri: "y1", prefix: "y", local: "a" } ]
+      , [ "opentag", { name: "root", uri: "", prefix: "", local: "root",
+            attributes: { "xmlns:x": { name: "xmlns:x", value: "x1", uri: "", prefix: "xmlns", local: "x" }
+                        , "xmlns:y": { name: "xmlns:y", value: "y1", uri: "", prefix: "xmlns", local: "y" }
+                        , "x:a": { name: "x:a", value: "x1", uri: "x1", prefix: "x", local: "a" }
+                        , "y:a": { name: "y:a", value: "y1", uri: "y1", prefix: "y", local: "a" } }, 
             bindings: [ "x", "y" ] } ]
 
-      , [ "bindnamespace", { prefix: "x", namespace: "x2" } ]
-      , [ "attribute", { name: "xmlns:x", value: "x2", namespace: "", prefix: "xmlns", local: "x" } ]
-      , [ "opentag", { name: "rebind", namespace: "", prefix: "", local: "rebind", 
-            attributes: { "xmlns:x": { name: "xmlns:x", value: "x2", namespace: "", prefix: "xmlns", local: "x" } }, 
+      , [ "opennamespace", { prefix: "x", uri: "x2" } ]
+      , [ "attribute", { name: "xmlns:x", value: "x2", uri: "", prefix: "xmlns", local: "x" } ]
+      , [ "opentag", { name: "rebind", uri: "", prefix: "", local: "rebind", 
+            attributes: { "xmlns:x": { name: "xmlns:x", value: "x2", uri: "", prefix: "xmlns", local: "x" } }, 
             bindings: [ "x" ] } ]
       
-      , [ "attribute", { name: "x:a", value: "x2", namespace: "x2", prefix: "x", local: "a" } ]
-      , [ "attribute", { name: "y:a", value: "y1", namespace: "y1", prefix: "y", local: "a" } ]
-      , [ "opentag", { name: "check", namespace: "", prefix: "", local: "check", 
-            attributes: { "x:a": { name: "x:a", value: "x2", namespace: "x2", prefix: "x", local: "a" } 
-                        , "y:a": { name: "y:a", value: "y1", namespace: "y1", prefix: "y", local: "a" } },
+      , [ "attribute", { name: "x:a", value: "x2", uri: "x2", prefix: "x", local: "a" } ]
+      , [ "attribute", { name: "y:a", value: "y1", uri: "y1", prefix: "y", local: "a" } ]
+      , [ "opentag", { name: "check", uri: "", prefix: "", local: "check", 
+            attributes: { "x:a": { name: "x:a", value: "x2", uri: "x2", prefix: "x", local: "a" } 
+                        , "y:a": { name: "y:a", value: "y1", uri: "y1", prefix: "y", local: "a" } },
             bindings: [] } ]
 
       , [ "closetag", "check" ]
 
       , [ "closetag", "rebind" ]
-      , [ "unbindnamespace", { prefix: "x", namespace: "x2" } ]
+      , [ "closenamespace", { prefix: "x", uri: "x2" } ]
 
-      , [ "attribute", { name: "x:a", value: "x1", namespace: "x1", prefix: "x", local: "a" } ]
-      , [ "attribute", { name: "y:a", value: "y1", namespace: "y1", prefix: "y", local: "a" } ]
-      , [ "opentag", { name: "check", namespace: "", prefix: "", local: "check", 
-            attributes: { "x:a": { name: "x:a", value: "x1", namespace: "x1", prefix: "x", local: "a" } 
-                        , "y:a": { name: "y:a", value: "y1", namespace: "y1", prefix: "y", local: "a" } },
+      , [ "attribute", { name: "x:a", value: "x1", uri: "x1", prefix: "x", local: "a" } ]
+      , [ "attribute", { name: "y:a", value: "y1", uri: "y1", prefix: "y", local: "a" } ]
+      , [ "opentag", { name: "check", uri: "", prefix: "", local: "check", 
+            attributes: { "x:a": { name: "x:a", value: "x1", uri: "x1", prefix: "x", local: "a" } 
+                        , "y:a": { name: "y:a", value: "y1", uri: "y1", prefix: "y", local: "a" } },
             bindings: [] } ]
       , [ "closetag", "check" ]
       
       , [ "closetag", "root" ]
-      , [ "unbindnamespace", { prefix: "y", namespace: "y1" } ]
-      , [ "unbindnamespace", { prefix: "x", namespace: "x1" } ]
+      , [ "closenamespace", { prefix: "y", uri: "y1" } ]
+      , [ "closenamespace", { prefix: "x", uri: "x1" } ]
       ]
     , strict : true
     , opt : { xmlns: true }
